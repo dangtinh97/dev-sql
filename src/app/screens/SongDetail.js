@@ -4,75 +4,101 @@ import './footer.scss';
 import getIdByLink from "../../utils/getIdByLink";
 import {MusicService} from "../../services/music";
 import ReactHtmlParser from 'react-html-parser';
-let audio=null;
+import FacebookLogin from 'react-facebook-login';
+let audio = null;
 
-let lyricInit={
-    by:"",
-    data:""
+let lyricInit = {
+    by: "",
+    data: ""
 };
-class SongDetail extends Component{
+
+class SongDetail extends Component {
     constructor(props) {
         super(props);
-        this.state={
-            loading:true,
-            playAudio:false,
-            lyric:lyricInit
+        this.state = {
+            loading: true,
+            playAudio: false,
+            lyric: lyricInit,
+            song:{},
+            audio:new Audio('http://vnno-vn-5-tf-mp3-s1-zmp3.zadn.vn/5f26ec56c7112e4f7700/2342530876041250633?authen=exp=1605506027~acl=/5f26ec56c7112e4f7700/*~hmac=23e445061e0b5b9a60229002d6ad5fbc')
         }
+        this.canvas = React.createRef();
     }
 
-    componentDidMount = async ()=>{
-        let key=getIdByLink();
-        let getLyric=await MusicService.getLyric(key);
-        let resultFind  =await MusicService.searchLink(key);
 
-        if(getLyric.data.length>0){
-            lyricInit.by=getLyric.data[0]['username']
-            lyricInit.data=getLyric.data[0]['content']
+
+    componentDidMount = async () => {
+        let key = getIdByLink();
+        let getLyric = await MusicService.getLyric(key);
+        let resultFind = await MusicService.searchLink(key);
+
+        if (getLyric.data.length > 0) {
+            lyricInit.by = getLyric.data[0]['username']
+            lyricInit.data = getLyric.data[0]['content']
         }
         this.setState({
-            loading:false,
-            lyric:lyricInit,
+            loading: false,
+            lyric: lyricInit,
+            song:resultFind.data.song
         })
-        audio=new Audio(resultFind.data.song.link_mp3);
-
+        audio = new Audio(resultFind.data.song.link_mp3);
+         audio.load();
     }
 
-    render() {
-        return (
-            <div id="app">
-                <Header/>
-                <div className="container bg-white p-3" style={{marginTop:"55px"}}>
-                    <div className="info-song">
 
-                    </div>
-                    <div >
-                        <button className={this.state.playAudio===false ? "btn btn-primary play":"d-none"} onClick={()=>{audio.play(); this.setState({playAudio:true})}}>
-                            <i className="fa fa-play-circle" aria-hidden="true"></i>
-                            <span> Phát nhạc</span>
-                        </button>
-
-                        <button className={this.state.playAudio===true ? "btn btn-outline-danger play":"d-none"} onClick={()=>{audio.pause();this.setState({playAudio:false})}}>
-                            <i className="fa fa-pause-circle" aria-hidden="true"></i>
-                            <span> Tạm dừng</span>
-                        </button>
-                    </div>
-                    <div className="mt-3 z-video-info">
-                        Lời bài hát
-                        <div className="text-black " style={{
-                            fontSize:"1em"
-                        }}>
-                            <span className="text-muted">Cung cấp bởi: {this.state.lyric.by}</span>
-                            <div ><br/>{ReactHtmlParser( this.state.lyric.data )}</div>
-                        </div>
-
-                    </div>
+render()
+{
+    return (
+        <div id="app">
+            <Header/>
+            <div className="container bg-white p-3" style={{marginTop: "55px"}}>
+                <div className="info-song">
+                    <FacebookLogin
+                        appId="388320271590142"
+                        autoLoad={true}
+                        fields="name,email,picture"
+                        // onClick={}
+                        callback={(eventFacebook)=>(function (eventFacebook){
+                            console.log(eventFacebook);
+                        })}
+                    />
                 </div>
-                <div className={this.state.loading===true ? "loading style-2" : "d-none"}>
-                    <div className="loading-wheel"></div>
+                <div>
+                    <button className={this.state.playAudio === false ? "btn btn-primary play" : "d-none"}
+                            onClick={() => {
+                                audio.play();
+                                this.setState({playAudio: true})
+                            }}>
+                        <i className="fa fa-play-circle" aria-hidden="true"></i>
+                        <span> Phát nhạc</span>
+                    </button>
+
+                    <button className={this.state.playAudio === true ? "btn btn-outline-danger play" : "d-none"}
+                            onClick={() => {
+                                audio.pause();
+                                this.setState({playAudio: false})
+                            }}>
+                        <i className="fa fa-pause-circle" aria-hidden="true"></i>
+                        <span> Tạm dừng</span>
+                    </button>
+                </div>
+                <div className="mt-3 z-video-info">
+                    Lời bài hát: <strong>{this.state.song.name}</strong>
+                    <div className="text-black " style={{
+                        fontSize: "1em"
+                    }}>
+                        <span className="text-muted">Cung cấp bởi: {this.state.lyric.by}</span>
+                        <div><br/>{ReactHtmlParser(this.state.lyric.data)}</div>
+                    </div>
+
                 </div>
             </div>
-        )
-    }
+            <div className={this.state.loading === true ? "loading style-2" : "d-none"}>
+                <div className="loading-wheel"></div>
+            </div>
+        </div>
+    )
+}
 }
 
 export default SongDetail;
