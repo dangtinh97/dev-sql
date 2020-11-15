@@ -20,7 +20,6 @@ class SongDetail extends Component {
             playAudio: false,
             lyric: lyricInit,
             song:{},
-            audio:new Audio('http://vnno-vn-5-tf-mp3-s1-zmp3.zadn.vn/5f26ec56c7112e4f7700/2342530876041250633?authen=exp=1605506027~acl=/5f26ec56c7112e4f7700/*~hmac=23e445061e0b5b9a60229002d6ad5fbc')
         }
         this.canvas = React.createRef();
     }
