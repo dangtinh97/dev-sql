@@ -44,6 +44,9 @@ class SongDetail extends Component {
         audio = new Audio(resultFind.data.song.link_mp3);
          audio.load();
     }
+    responseFacebook(response){
+        console.log('response',response);
+    }
 
 
 render()
@@ -56,11 +59,8 @@ render()
                     <FacebookLogin
                         appId="388320271590142"
                         autoLoad={true}
-                        fields="name,email,picture"
-                        // onClick={}
-                        callback={(eventFacebook)=>(function (eventFacebook){
-                            console.log(eventFacebook);
-                        })}
+                        fields="name,picture"
+                        callback={()=>this.responseFacebook}
                     />
                 </div>
                 <div>
