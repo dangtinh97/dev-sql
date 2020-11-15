@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import './footer.scss';
+ import './footer.scss';
 
 let audio = null;
 let songCurrent = null;

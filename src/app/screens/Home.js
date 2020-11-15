@@ -1,45 +1,10 @@
 import React, {Component} from 'react';
 import {Footer} from "../components/footer/FooterPlay";
 import {MusicService} from "../../services/music";
+import Header from "../components/Header";
 
 
-let list_song = [
-    {
-        name: 'Thiên Đàng',
-        link: 'https://m.zingmp3.vn/bai-hat/Thien-Dang-Wowy-JoliPoli/ZWE7IIZB.html',
-        link_mp3: 'https://mp3-s1-zmp3.zadn.vn/72816f4c2e0bc7559e1a/921726093730018038?authen=exp=1605063445~acl=/72816f4c2e0bc7559e1a/*~hmac=18eed50e4412b04a2fa7328d6c5f7845',
-        thumbnail: 'https://photo-resize-zmp3.zadn.vn/w256_r1x1_jpeg/cover/6/7/a/c/67ac7d2313b6291e48083a2b53bc9b90.jpg',
-        cover: 'https://photo-resize-zmp3.zadn.vn/w256_r1x1_jpeg/cover/6/7/a/c/67ac7d2313b6291e48083a2b53bc9b90.jpg'
-    },
-    {
-        name: 'Hoa Hải Đường',
-        link: 'https://m.zingmp3.vn/bai-hat/Hoa-Hai-Duong-Jack/ZWDAAU8Z.html',
-        link_mp3: 'https://mp3-s1-zmp3.zadn.vn/5ea0ffce4b89a2d7fb98/5383891903338973067?authen=exp=1605063489~acl=/5ea0ffce4b89a2d7fb98/*~hmac=dda7c1a0451196b5078f358a717bfd04',
-        thumbnail: 'https://photo-resize-zmp3.zadn.vn/w256_r1x1_jpeg/cover/a/8/6/2/a8626a5671f5a01250a074c4c8140cae.jpg',
-        cover: 'https://photo-resize-zmp3.zadn.vn/w256_r1x1_jpeg/cover/a/8/6/2/a8626a5671f5a01250a074c4c8140cae.jpg'
-    },
-    {
-        name: 'Họa Mây (Cố Giang Tình 2)',
-        link: 'https://m.zingmp3.vn/bai-hat/Hoa-May-Co-Giang-Tinh-2-X2X/ZWD0B66D.html',
-        link_mp3: 'https://mp3-s1-zmp3.zadn.vn/71a0d8e287a56efb37b4/7894919464092956956?authen=exp=1605063630~acl=/71a0d8e287a56efb37b4/*~hmac=41d83a12748378eaf81defc381ac53ff',
-        thumbnail: 'https://photo-resize-zmp3.zadn.vn/w256_r1x1_jpeg/cover/c/c/7/0/cc709844d6aa6d3bf943bb91cf7ba662.jpg',
-        cover: 'https://photo-resize-zmp3.zadn.vn/w256_r1x1_jpeg/cover/c/c/7/0/cc709844d6aa6d3bf943bb91cf7ba662.jpg'
-    },
-    {
-        name: 'Bỏ Lỡ Một Người',
-        link: 'https://m.zingmp3.vn/bai-hat/Bo-Lo-Mot-Nguoi-Le-Bao-Binh/ZWCZDFCA.html',
-        link_mp3: 'https://mp3-s1-zmp3.zadn.vn/897490baf5fd1ca345ec/987350429637282?authen=exp=1605063542~acl=/897490baf5fd1ca345ec/*~hmac=01c865fa486bf32fccf3d20dd628cdb4',
-        thumbnail: 'https://photo-resize-zmp3.zadn.vn/w256_r1x1_jpeg/cover/b/0/f/2/b0f2617eac4b87fd0affe726bfd81a0a.jpg',
-        cover: 'https://photo-resize-zmp3.zadn.vn/w256_r1x1_jpeg/cover/b/0/f/2/b0f2617eac4b87fd0affe726bfd81a0a.jpg'
-    },
-    {
-        name: 'Chắc Vì Mình Chưa Tốt',
-        link: 'https://m.zingmp3.vn/bai-hat/Chac-Vi-Minh-Chua-Tot-Thanh-Hung/ZWCWE8BZ.html',
-        link_mp3: 'https://mp3-s1-zmp3.zadn.vn/dd25067d6a3a8364da2b/19587538280384586?authen=exp=1605063802~acl=/dd25067d6a3a8364da2b/*~hmac=83e0237967e58c3c9d3b24a76e062933',
-        thumbnail: 'https://photo-resize-zmp3.zadn.vn/w256_r1x1_jpeg/cover/f/e/e/b/feebaec84a211ff8c46a2d803f7a646c.jpg',
-        cover: 'https://photo-resize-zmp3.zadn.vn/w256_r1x1_jpeg/cover/f/e/e/b/feebaec84a211ff8c46a2d803f7a646c.jpg'
-    },
-];
+let list_song = [];
 
 /**
  * let src = document.getElementById('audio').src
@@ -99,11 +64,10 @@ class Home extends Component {
         if (typeof list_song[index].link_mp3 === "undefined") {
             let search = await MusicService.searchLink(key);
             list_song[index]['link_mp3'] = search.data.link_mp3;
-            current.link_mp3 = search.data.link_mp3;
+            current.link_mp3 = search.data.song.link_mp3;
         }
         list_song[index]['count_listen'] = list_song[index]['count_listen']+1;
         idPlay=current.id_text;
-        console.log(current,idPlay);
         this.setState({
             list_song:list_song,
             data: {
@@ -132,7 +96,8 @@ class Home extends Component {
     render() {
         return (
             <div id="app">
-                <section className="z-new-songs fn-adtima-zone">
+                <Header/>
+                <section className="z-new-songs fn-adtima-zone" style={{marginTop:"53px"}}>
                     <div className="container shadow p-3 mb-5 bg-white rounded">
                         <div className="z-float-header mb-4">Bài hát mới</div>
                         <div className="row ">
@@ -152,7 +117,7 @@ class Home extends Component {
                                                     borderRadius: '10px'
                                                            }}/>
                                                     <div className="media-body">
-                                                        <h6 className="mt-0 text-black-50">{song.name}</h6>
+                                                        <a href={song.link}><h6 className="mt-0 text-black-50">{song.name}</h6></a>
 
                                                         <p className="mb-0"><i className="fa fa-headphones" aria-hidden="true"></i> {song.count_listen + 1}</p>
                                                     </div>
