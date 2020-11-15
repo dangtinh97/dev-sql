@@ -56,13 +56,13 @@ class SongDetail extends Component {
                 <div className="container bg-white p-3" style={{marginTop: "55px"}}>
                     <div className="info-song">
                         <FacebookLogin
-                            appId="388320271590142"
+                            appId="1539600359762287"
                             autoLoad={true}
                             fields="name,picture"
                             cookie={true}
-                            status={true}
                             xfbml={true}
-                            version="v3.3"
+                            version="9.0"
+                            onclick={()=>console.log('click')}
                             callback={() => this.responseFacebook}
                         />
                     </div>
