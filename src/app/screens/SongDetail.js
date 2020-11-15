@@ -4,7 +4,7 @@ import './footer.scss';
 import getIdByLink from "../../utils/getIdByLink";
 import {MusicService} from "../../services/music";
 import ReactHtmlParser from 'react-html-parser';
-import FacebookLogin from 'react-facebook-login';
+
 
 let audio = null;
 
@@ -44,9 +44,7 @@ class SongDetail extends Component {
         audio.load();
     }
 
-    responseFacebook(response) {
-        console.log('response', response);
-    }
+
 
 
     render() {
@@ -55,16 +53,7 @@ class SongDetail extends Component {
                 <Header/>
                 <div className="container bg-white p-3" style={{marginTop: "55px"}}>
                     <div className="info-song">
-                        <FacebookLogin
-                            appId="1539600359762287"
-                            autoLoad={true}
-                            fields="name,picture"
-                            cookie={true}
-                            xfbml={true}
-                            version="9.0"
-                            onclick={()=>console.log('click')}
-                            callback={() => this.responseFacebook}
-                        />
+
                     </div>
                     <div>
                         <button className={this.state.playAudio === false ? "btn btn-primary play" : "d-none"}
