@@ -52,8 +52,8 @@ export default function Header() {
 
     let responseFacebook=async (response)=>{
         setLogin(true);
+        if( typeof response==="undefined"||typeof response.name==="undefined") return;
         setFacebook(response);
-        console.log(response);
         console.log(response.name);
     }
 
@@ -92,24 +92,24 @@ export default function Header() {
                         </Form>
                     </Nav>
                     <Nav>
-                        <Nav>
+                        {/*<Nav>*/}
 
-                                <FacebookLogin
-                                    appId="1539600359762287"
-                                    autoLoad={true}
-                                    fields="name,picture,id"
-                                    cookie={true}
-                                    xfbml={true}
-                                    version="9.0"
-                                    size="small"
-                                    textButton="Đăng nhập"
-                                    disableMobileRedirect={true}
-                                    callback={responseFacebook}
-                                    cssClass={isLogin===false ? "kep-login-facebook":"d-none"}/>
-                        </Nav>
-                        <Nav >
-                            <div className= {facebook!==null ? "text-white":"d-none"}> Xin chào: {facebook!==null? facebook.name : ""}</div>
-                        </Nav>
+                        {/*        <FacebookLogin*/}
+                        {/*            appId="1539600359762287"*/}
+                        {/*            autoLoad={true}*/}
+                        {/*            fields="name,picture,id"*/}
+                        {/*            cookie={true}*/}
+                        {/*            xfbml={true}*/}
+                        {/*            version="9.0"*/}
+                        {/*            size="small"*/}
+                        {/*            textButton="Đăng nhập"*/}
+                        {/*            onClick={()=>console.log()}*/}
+                        {/*            callback={()=>responseFacebook()}*/}
+                        {/*            cssClass={isLogin===false ? "kep-login-facebook":"d-none"}/>*/}
+                        {/*</Nav>*/}
+                        {/*<Nav >*/}
+                        {/*    <div className= {facebook!==null ? "text-white":"d-none"}> Xin chào: {facebook!==null? facebook.name : ""}</div>*/}
+                        {/*</Nav>*/}
                         {/*<Nav.Link href="#deets">More deets</Nav.Link>*/}
                         {/*<Nav.Link eventKey={2} href="#memes">*/}
                         {/*    Dank memes*/}
@@ -122,35 +122,6 @@ export default function Header() {
             position:"fixed",
             zIndex:"1024",
         }} >
-
-            {/*<nav className=" player-controls flex-row flex-middle push-right" style={{ width:"100%"}}>*/}
-            {/*    <a href="/">*/}
-            {/*    <img src="/assets/logo.png" width="50px" className="img-round mr-2 logo_header"/>*/}
-            {/*    </a>*/}
-            {/*    <section className="bg-white p-1 pl-3 border _section_search" >*/}
-            {/*        <input placeholder="Tìm kiếm..." className="border-right " type="search" ref={keyByInput} onKeyUp={(e)=>search(e.target.value,e)} />*/}
-            {/*        <button className="p-1 pl-2" onClick={(e)=>clickSearch()}><i*/}
-            {/*        className="fa fa-search" aria-hidden="true"></i></button>*/}
-            {/*    </section>*/}
-            {/*    <form className="form-inline">*/}
-            {/*        <FacebookLogin*/}
-            {/*            appId="1539600359762287"*/}
-            {/*            autoLoad={true}*/}
-            {/*            fields="name,picture,id"*/}
-            {/*            cookie={true}*/}
-            {/*            xfbml={true}*/}
-            {/*            version="9.0"*/}
-            {/*            size="small"*/}
-            {/*            textButton="Đăng nhập"*/}
-            {/*            disableMobileRedirect={true}*/}
-            {/*            callback={responseFacebook}*/}
-            {/*            cssClass={isLogin===false ? "kep-login-facebook":"d-none"}*/}
-            {/*        />*/}
-            {/*    </form>*/}
-            {/*    <div className= {facebook!==null ? "kep-login-facebook":"d-none"}> Xin chào: {facebook!==null? facebook.name : ""}</div>*/}
-            {/*</nav>*/}
-
-            {/*<div className={showList===true ? "container shadow mb-5 bg-white rounded border border-success": "d-none"} style={{*/}
             <div className={showList===true ?"container shadow mb-5 bg-white rounded border border-success": "d-none"} style={styleList}>
                 <div className="d-flex p-2 bd-highlight ">
                     <div className="d-flex flex-grow-1">Kết quả tìm kiếm:{keySearch} <div className={showLoading===true  ? "ml-3 d-flex justify-content-center":"d-none"}>
